@@ -8,12 +8,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.sound.midi.SysexMessage;
 import java.util.List;
-
+import java.util.Scanner;
 public class Main {
     private static ChromeDriver driver = null;
 
 
     public static void Chrome() {
+
         String exePath = "C:\\Users\\user02\\Downloads\\chromedriver_win32\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
         ChromeOptions options = new ChromeOptions();
@@ -24,27 +25,25 @@ public class Main {
 
     public static void main(String[] args) {
         Chrome();
-
-
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce el producto que desee:");
+        String Busqueda = sc.nextLine();
         WebElement cajaBusqueda =
                 driver.findElement(By.id("twotabsearchtextbox"));
-        cajaBusqueda.sendKeys("Iphone");
+        cajaBusqueda.sendKeys(Busqueda);
         cajaBusqueda.submit();
 
-        List<WebElement>listaElementos =
-        driver.findElements(By.xpath("//*[contains(@class, 'article-itemGroup')]"));
-        System.out.println("Número de elementos de la lista: " + listaElementos.size());
+
         // Obtener cada uno de los artículos
-        WebElement elementoActual, navegacion;
+
         int j=1;
 
-        for (int i=0; i<listaElementos.size();i++)
+        for (int i=4; i<5;i++)
         {
-        elementoActual = listaElementos.get(i);
-        navegacion =
-        elementoActual.findElement(By.xpath("/html/body/div[4]/div/div[6]/ul/li["+ j +
-                "]" + "/div/div[2]/div/p[1]/a"));
-            System.out.println(j + " " +navegacion.getText());j++;
+            String modelo = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div[2]/div/span[3]/div[2]/div["+i+"]/div/span/div/div/div[2]/div[2]/div/div[2]/div[1]/div/div[1]/div/div/div/a/span/span[2]/span[1]")).getText();
+        String precio = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[1]/div[2]/div/span[3]/div[2]/div["+i+"]/div/span/div/div/div[2]/div[2]/div/div[2]/div[1]/div/div[1]/div/div/div/a/span/span[2]/span[1]")).getText();
+            System.out.println(modelo);
+            System.out.println(precio);
         }
     }
 }
